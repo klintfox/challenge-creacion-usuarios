@@ -1,5 +1,4 @@
-# ws-creacion-usuarios
-#Evaluación Java
+# Evaluación Java
 
 Desarrolle una aplicación que exponga una API RESTful de creación de usuarios. 
 Todos los endpoints deben aceptar y retornar solamente JSON, inclusive al para los mensajes de error. 
