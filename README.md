@@ -96,7 +96,7 @@ Todos los mensajes deben seguir el formato:
 
 #### 3 Esquema Regex Email Validation
 
-        ^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+cl
+    ^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+cl
 
 #### 4 Esquema Regex Email Validation
 
