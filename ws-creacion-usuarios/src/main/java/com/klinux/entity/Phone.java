@@ -17,33 +17,17 @@ public class Phone {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String number;
+	private int number;
 
 	@Column(name = "city_code")
-	private String citycode;
+	private int citycode;
 
 	@Column(name = "country_code")
-	private String countrycode;
+	private int countrycode;
 
 	@ManyToOne
-	@JoinColumn(name = "fk_user", nullable = false, updatable = false)
+	@JoinColumn(name = "fk_user", nullable = false)
 	private User user;
-
-	public String getNumber() {
-		return number;
-	}
-
-	public void setNumber(String number) {
-		this.number = number;
-	}
-
-	public String getCitycode() {
-		return citycode;
-	}
-
-	public void setCitycode(String citycode) {
-		this.citycode = citycode;
-	}
 
 	public Long getId() {
 		return id;
@@ -53,11 +37,27 @@ public class Phone {
 		this.id = id;
 	}
 
-	public String getCountrycode() {
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
+	public int getCitycode() {
+		return citycode;
+	}
+
+	public void setCitycode(int citycode) {
+		this.citycode = citycode;
+	}
+
+	public int getCountrycode() {
 		return countrycode;
 	}
 
-	public void setCountrycode(String countrycode) {
+	public void setCountrycode(int countrycode) {
 		this.countrycode = countrycode;
 	}
 

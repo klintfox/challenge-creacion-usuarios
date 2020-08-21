@@ -1,6 +1,8 @@
 package com.klinux.dto;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -10,17 +12,22 @@ public class ResponseDto implements Serializable {
 
 	private String mensaje;
 
-	private String id;
+	@JsonProperty("id")
+	private UUID id;
 
-	private String created;
+	@JsonProperty("created")
+	private Date created;
 
-	private String modified;
+	@JsonProperty("modified")
+	private Date modified;
 
 	@JsonProperty("last_login")
-	private String lastLogin;
+	private Date lastLogin;
 
+	@JsonProperty("token")
 	private String token;
 
+	@JsonProperty("isactive")
 	private String isactive;
 
 	public String getMensaje() {
@@ -29,37 +36,37 @@ public class ResponseDto implements Serializable {
 
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
-	}	
+	}
 
-	public String getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
-	public String getCreated() {
+	public Date getCreated() {
 		return created;
 	}
 
-	public void setCreated(String created) {
+	public void setCreated(Date created) {
 		this.created = created;
 	}
 
-	public String getModified() {
+	public Date getModified() {
 		return modified;
 	}
 
-	public void setModified(String modified) {
+	public void setModified(Date modified) {
 		this.modified = modified;
 	}
 
-	public String getLastLogin() {
+	public Date getLastLogin() {
 		return lastLogin;
 	}
 
-	public void setLastLogin(String lastLogin) {
+	public void setLastLogin(Date lastLogin) {
 		this.lastLogin = lastLogin;
 	}
 

@@ -9,7 +9,7 @@ public class UsuarioDto implements Serializable {
 	private String name;
 	private String email;
 	private String password;
-	private List<PhonesDto> phone;
+	private List<PhonesDto> phones;
 
 	public UsuarioDto() {
 	}
@@ -38,17 +38,12 @@ public class UsuarioDto implements Serializable {
 		this.password = password;
 	}
 
-	public List<PhonesDto> getPhone() {
-		return phone;
+	public List<PhonesDto> getPhones() {
+		return phones;
 	}
 
-	public void setPhone(List<PhonesDto> phone) {
-		this.phone = phone;
-	}
-
-	@Override
-	public String toString() {
-		return "UsuarioDto [name=" + name + ", email=" + email + ", password=" + password + ", phone=" + phone + "]";
+	public void setPhones(List<PhonesDto> phones) {
+		this.phones = phones;
 	}
 
 }

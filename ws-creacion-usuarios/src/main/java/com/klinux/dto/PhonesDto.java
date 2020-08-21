@@ -5,31 +5,31 @@ import java.io.Serializable;
 public class PhonesDto implements Serializable {
 
 	private static final long serialVersionUID = 4093730209867093750L;
-	private String number;
-	private String citycode;
-	private String countrycode;
+	private int number;
+	private int citycode;
+	private int countrycode;
 
-	public String getNumber() {
+	public int getNumber() {
 		return number;
 	}
 
-	public void setNumber(String number) {
+	public void setNumber(int number) {
 		this.number = number;
 	}
 
-	public String getCitycode() {
+	public int getCitycode() {
 		return citycode;
 	}
 
-	public void setCitycode(String citycode) {
+	public void setCitycode(int citycode) {
 		this.citycode = citycode;
 	}
 
-	public String getCountrycode() {
+	public int getCountrycode() {
 		return countrycode;
 	}
 
-	public void setCountrycode(String countrycode) {
+	public void setCountrycode(int countrycode) {
 		this.countrycode = countrycode;
 	}
 
