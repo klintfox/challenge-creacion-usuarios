@@ -85,7 +85,6 @@ Todos los mensajes deben seguir el formato:
     ```sh
         ^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+cl
     ```
-
 #### 4 Esquema Regex Email Validation
     ```sh
     ^([A-Z])([a-z]).{5}([0-9]{2})
@@ -104,3 +103,7 @@ Todos los mensajes deben seguir el formato:
         }
     }
      ```
+#### 6 Página para validar expresiones regulares
+    ```sh
+        https://regexr.com/3bfsi
+    ```
