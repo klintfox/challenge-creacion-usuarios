@@ -95,13 +95,13 @@ Todos los mensajes deben seguir el formato:
     
 
 #### 3 Esquema Regex Email Validation
-    ```sh
+
         ^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+cl
-    ```
+
 #### 4 Esquema Regex Email Validation
-    ```sh
+
     ^([A-Z])([a-z]).{5}([0-9]{2})
-    ```
+
 #### 5 Dependencias Gradle
      
     dependencies {
