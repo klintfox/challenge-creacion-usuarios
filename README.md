@@ -51,3 +51,56 @@ Todos los mensajes deben seguir el formato:
 * Pruebas de unidad 
 
 ### Solución
+
+#### 1 Esquema BD - H2
+- Al ejecutar el programa se abrirá el navegador mostrando el login de la base de datos H2
+    ```sh
+        http://172.27.160.1:8082/
+     ```
+#### 2 Esquema BD - H2
+     ```sh
+        create table user ( 
+        id  varchar(255)  primary key not null,
+        name varchar(50) not null, 
+        email varchar(255) not null, 
+        password varchar(20)  not null, 
+        created timestamp null, 
+        modified timestamp null,
+        last_login timestamp null,
+        is_active null,
+        token varchar(300) not null
+        );
+
+        create table user_phones ( 
+        id INT primary key not null,
+        number  int null, 
+        city_code int null, 
+        country_code int null, 
+        fk_user varchar(300),
+        foreign key (fk_user ) references user(id)
+        );
+    ```
+
+#### 3 Esquema Regex Email Validation
+    ```sh
+        ^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+cl
+    ```
+
+#### 4 Esquema Regex Email Validation
+    ```sh
+    ^([A-Z])([a-z]).{5}([0-9]{2})
+    ```
+#### 5 Dependencias Gradle
+     ```sh
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.cloud:spring-cloud-starter-security'
+        developmentOnly 'org.springframework.boot:spring-boot-devtools'
+        compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
+        runtimeOnly 'com.h2database:h2'
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+    }
+     ```
