@@ -23,10 +23,21 @@ public class UtilValidations {
 		return flag;
 	}
 
-	// validar clave (Una Mayuscula, letras minúsculas, y dos numeros)
-	
+	/**
+	 * validar clave (La primera Mayuscula, letras minúsculas, y dos numeros)
+	 * @param password
+	 * @return
+	 */
 	public static boolean passwordValidator(String password) {
-		boolean flag = true;
+//		([A-Z]{1})|([a-z])|([0-9]{2})
+		boolean flag = false;
+		String regex = "^([A-Z])([a-z]).{5}([0-9]{2})"; // mayuscula
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(password);
+		String response = (matcher.matches() ? "valid" : "invalid");
+		if (response.equals("valid")) {
+			flag = true;
+		}		
 		return flag;
 	}
 }

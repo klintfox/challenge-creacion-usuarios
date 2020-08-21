@@ -25,18 +25,6 @@ class LoginServiceImplTest {
 	private LoginRepository loginRepository;
 
 //	@Test
-//	void testSaveUser() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testSaveNewUser() {
-//		UsuarioDto userDto = new UsuarioDto();
-//		userDto.se
-//		fail("Not yet implemented");
-//	}	
-
-	@Test
 	void saveUser() {
 		boolean flag = false;
 		String token = getJWTToken("klint@gmail.cl");
@@ -65,7 +53,7 @@ class LoginServiceImplTest {
 
 	@Test
 	void passwordValidator() {
-		String password = "";
+		String password = "Program26";
 		boolean flag = UtilValidations.passwordValidator(password);
 		assertTrue(flag);
 	}

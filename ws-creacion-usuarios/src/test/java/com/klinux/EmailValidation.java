@@ -7,18 +7,13 @@ import java.util.regex.Pattern;
 
 public class EmailValidation {
 
-	final static String regex = "(?=.*?^[A-Z{1}])(?=.*?[a-z])"; // mayuscula
-//	final static String regex = "^([a-zA-Z])"; // minuscula
-//	final static String regex = "[0-9]{2}"; // dos numeros
-//	final static String regex = "^(?=.*?[A-Z]{1})(?=.*?[a-z])(?=.*?[0-9]).{2}(?=.*?^[#?!@$%^&*-]).{8,}$";
+	final static String regex = "^([A-Z])([a-z]).{5}([0-9]{2})"; // mayuscula
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args) {
 
-//		boolean flag = otrometodo();
-//		System.out.println("Resultado: " + flag);
-
 		List emails = new ArrayList();
-		emails.add("Soloyo67"); // 1
+		emails.add("Program45"); // 1
 		emails.add("Soloyo"); // 2
 		emails.add("Aliceeee@aa33"); // 3
 		emails.add("AliCe@aa33"); // 4
@@ -33,50 +28,13 @@ public class EmailValidation {
 		emails.add("AbA"); // 13
 		emails.add("Ab"); // 14
 		emails.add("Ab02"); // 15
-		emails.add("02"); // 15
-//
-//		// initialize the Pattern object
+		emails.add("02"); // 16
+
 		Pattern pattern = Pattern.compile(regex);
-//
-//		// searching for occurrences of regex
 		for (int i = 0; i < emails.size(); i++) {
 			Matcher matcher = pattern.matcher(emails.get(i).toString());
 			System.out.println(i + 1 + "   " + (matcher.matches() ? "Valid" : "invalid"));
 		}
 
 	}
-
-	private static boolean otrometodo() {
-		boolean flagResponse = false;
-		boolean flag = false;
-		boolean flag2 = false;
-
-		String s = "Soloyo4g4$$";
-
-		// 1 find two numbers
-		String str = s.replaceAll("\\D+", "");
-		if (str.length() == 2) {
-			flag = true;
-//			System.out.println("1: " + flag);
-		}
-
-		// 2 find one upper character
-		int upperCount = 0;
-		for (int i = 0; i < s.length(); i++) {
-			if (Character.isUpperCase(s.charAt(i))) {
-				upperCount++;
-			}
-		}
-		if (upperCount == 1) {
-			flag2 = true;
-//			System.out.println("2: " + flag);
-		}
-
-		if (flag && flag2) {
-			flagResponse = true;
-		}
-
-		return flagResponse;
-	}
-
 }
