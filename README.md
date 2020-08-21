@@ -52,7 +52,7 @@ Todos los mensajes deben seguir el formato:
 * Git / Git Bash
 ### Solución
 
-#### 1 Ejecución del prouyecto
+#### 1 Ejecución del Proyecto
 * Requisitos
     - Java 8
     - Gradle
