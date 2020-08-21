@@ -49,11 +49,24 @@ Todos los mensajes deben seguir el formato:
 ### Requisitos deseables 
 * JWT cómo token 
 * Pruebas de unidad 
-
+* Git / Git Bash
 ### Solución
 
-#### 1 Esquema BD - H2
-- Al ejecutar el programa se abrirá el navegador mostrando el login de la base de datos H2
+#### 1 Ejecución del prouyecto
+* Requisitos
+    - Java 8
+    - Gradle
+    - IDE STS u otro compatible
+* Paso 1
+    - Clonar el proyecto con git o descargarlo
+    - Comando Git
+    ```sh
+        git clone https://github.com/klintfox/ws-creacion-usuarios.git
+    ```
+    - Impotar el proyecto al IDE   
+* Paso 2
+    - Ejecutar el proyecto springboot "WsCreacionUsuariosApplication" ubicado en el paquete "com.klinux"
+    - Al ejecutar el programa se abrirá el navegador mostrando el login de la base de datos H2
     ```sh
         http://172.27.160.1:8082/
      ```
