@@ -71,7 +71,7 @@ Todos los mensajes deben seguir el formato:
         http://172.27.160.1:8082/
      ```
 #### 2 Esquema BD - H2
-     ```sh
+    
         create table user ( 
         id  varchar(255)  primary key not null,
         name varchar(50) not null, 
@@ -83,7 +83,7 @@ Todos los mensajes deben seguir el formato:
         is_active null,
         token varchar(300) not null
         );
-
+    
         create table user_phones ( 
         id INT primary key not null,
         number  int null, 
@@ -92,7 +92,7 @@ Todos los mensajes deben seguir el formato:
         fk_user varchar(300),
         foreign key (fk_user ) references user(id)
         );
-    ```
+    
 
 #### 3 Esquema Regex Email Validation
     ```sh
@@ -103,7 +103,7 @@ Todos los mensajes deben seguir el formato:
     ^([A-Z])([a-z]).{5}([0-9]{2})
     ```
 #### 5 Dependencias Gradle
-     ```sh
+     
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -115,8 +115,8 @@ Todos los mensajes deben seguir el formato:
             exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
         }
     }
-     ```
+     
 #### 6 Página para validar expresiones regulares
-    ```sh
+    
         https://regexr.com/3bfsi
-    ```
+    
