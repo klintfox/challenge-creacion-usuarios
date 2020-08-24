@@ -65,10 +65,35 @@ Todos los mensajes deben seguir el formato:
     ```
     - Impotar el proyecto al IDE   
 * Paso 2
-    - Ejecutar el proyecto springboot "WsCreacionUsuariosApplication" ubicado en el paquete "com.klinux"
-    - Al ejecutar el programa se abrirá el navegador mostrando el login de la base de datos H2
+    - Ejecutar el proyecto realizando click derecho en el archivo Java "WsCreacionUsuariosApplication" ubicado en el paquete "com.klinux"
+    - Al ejecutar el proyecto se abrirá el navegador mostrando el login de la base de datos H2
     ```sh
         http://172.27.160.1:8082/
+     ```
+    - Hacer click en conectar
+* Paso 3
+    - Para probar el servicio abrir postman y realizar una petición POST en la siguiente url y pasar el siguiente json como body
+    ```sh
+        localhost:8090/login
+    ```
+    ```sh
+    { 
+        "name": "Carlos Rodriguez", 
+        "email": "Carlos@rodriguez.cl" , 
+        "password": "Prog35ram26", 
+        "phones": [ 
+            { 
+                "number": "987654321", 
+                "citycode": "11",	 
+                "countrycode": "57" 
+            },
+                { 
+                "number": "1234567887", 
+                "citycode": "11",	 
+                "countrycode": "57" 
+            }  
+        ] 
+    }
      ```
 #### 2 Esquema BD - H2
     
@@ -94,11 +119,11 @@ Todos los mensajes deben seguir el formato:
         );
     
 
-#### 3 Regex Email Validation
+#### 3 Regex para validar el Email
 
     ^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+cl
 
-#### 4 Regex Email Validation
+#### 4 Regex para validar el Password
 
     ^([A-Z])([a-z]).{5}([0-9]{2})
 
