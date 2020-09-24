@@ -3,11 +3,10 @@ package com.klinux.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Service;
 
 import com.klinux.dto.ResponseDto;
@@ -17,10 +16,6 @@ import com.klinux.entity.User;
 import com.klinux.repository.LoginRepository;
 import com.klinux.repository.PhoneRepository;
 import com.klinux.util.GeneralMessages;
-import com.klinux.util.UtilValidations;
-
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -29,39 +24,50 @@ public class LoginServiceImpl implements LoginService {
 	private LoginRepository loginRepository;
 
 	@Autowired
-	private PhoneRepository phoneRepositort;
+	private PhoneRepository phoneRepository;
+
+	private ResponseDto response = new ResponseDto();
+
+	private UsuarioDto usuarioDto = new UsuarioDto();
 
 	@Override
-	public ResponseDto saveUser(UsuarioDto userDto) throws Exception {
-		ResponseDto response = new ResponseDto();
-		boolean flag = false;
-		try {
-			System.out.println("User_Request: " + userDto.toString());
-			flag = UtilValidations.emailValidator(userDto.getEmail());
-			if (flag) {
-				flag = UtilValidations.passwordValidator(userDto.getPassword());
-				if (flag) {
-					User userDb = loginRepository.findByEmail(userDto.getEmail());
-					if (userDb == null) {
-						response = saveNewUser(userDto);
-					} else {
-						response.setMensaje(GeneralMessages.ERROR_USER_EXISTS);
-					}
-				} else {
-					response.setMensaje(GeneralMessages.ERROR_PASSWORD_FORMAT);
-				}
-			} else {
-				response.setMensaje(GeneralMessages.ERROR_EMAIL_FORMAT);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public ResponseDto saveUser(UsuarioDto request) throws Exception {
+		validateEmailPattern(request);
 		return response;
 	}
 
-	public ResponseDto saveNewUser(UsuarioDto userDto) throws Exception {
-		ResponseDto response = new ResponseDto();
-		String token = getJWTToken(userDto.getEmail());
+	private void validateEmailPattern(UsuarioDto request) throws Exception {
+		boolean flag = false;
+		flag = usuarioDto.validateEmailPattern(request.getEmail());
+		if (flag) {
+			validatePasswordPattern(request);
+		} else {
+			response.setMensaje(GeneralMessages.ERROR_EMAIL_FORMAT);
+		}
+	}
+
+	private void validatePasswordPattern(UsuarioDto request) throws Exception {
+		boolean flag = false;
+		flag = usuarioDto.validatePasswordPattern(request.getPassword());
+		if (flag) {
+			findUserbyEmail(request);
+		} else {
+			response.setMensaje(GeneralMessages.ERROR_PASSWORD_FORMAT);
+		}
+	}
+
+	public void findUserbyEmail(UsuarioDto usuario) throws Exception {
+		User userDb = loginRepository.findByEmail(usuario.getEmail());
+		if (userDb == null) {
+			saveNewUser(usuario);
+		} else {
+			response.setMensaje(GeneralMessages.ERROR_USER_EXISTS);
+		}
+	}
+
+	@Transactional
+	public void saveNewUser(UsuarioDto userDto) throws Exception {
+		String token = usuarioDto.generateToken(userDto.getEmail());
 		User user = new User();
 		user.setName(userDto.getName());
 		user.setEmail(userDto.getEmail());
@@ -72,16 +78,29 @@ public class LoginServiceImpl implements LoginService {
 		user.setIsactive(GeneralMessages.IS_ACTIVE);
 		user.setToken(token);
 		user = loginRepository.save(user);
+		if (user != null && userDto.getPhones().size() > 0)
+			savePhones(userDto, user);
+	}
+
+	@Transactional
+	public void savePhones(UsuarioDto userDto, User user) throws Exception {
 		List<Phone> phones = new ArrayList<>();
 		for (int i = 0; i < userDto.getPhones().size(); i++) {
 			Phone phone = new Phone();
-			phone.setNumber(userDto.getPhones().get(i).getNumber());
+			phone.setPhoneNumber(userDto.getPhones().get(i).getNumber());
 			phone.setCitycode(userDto.getPhones().get(i).getCitycode());
 			phone.setCountrycode(userDto.getPhones().get(i).getCountrycode());
 			phone.setUser(user);
 			phones.add(phone);
-			phoneRepositort.save(phone);
+			phone = phoneRepository.save(phone);
+			if (phone == null)
+				response.setMensaje(GeneralMessages.ERROR);
 		}
+		sendResponse(user);
+	}
+
+	public void sendResponse(User user) {
+		ResponseDto response = new ResponseDto();
 		response.setId(user.getId());
 		response.setCreated(user.getCreated());
 		response.setModified(user.getModified());
@@ -89,19 +108,6 @@ public class LoginServiceImpl implements LoginService {
 		response.setToken(user.getToken());
 		response.setIsactive(user.getIsactive());
 		response.setMensaje(GeneralMessages.EXITOSO);
-		return response;
-	}
-
-	private String getJWTToken(String username) {
-		String secretKey = "mySecretKey";
-		List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");
-		String token = Jwts.builder().setId("klinuxJWT").setSubject(username)
-				.claim("authorities",
-						grantedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 600000))
-				.signWith(SignatureAlgorithm.HS512, secretKey.getBytes()).compact();
-		return "Bearer " + token;
 	}
 
 }

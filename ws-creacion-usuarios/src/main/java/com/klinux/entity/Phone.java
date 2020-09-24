@@ -17,7 +17,8 @@ public class Phone {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private int number;
+	@Column(name = "phone_number")
+	private String phoneNumber;
 
 	@Column(name = "city_code")
 	private int citycode;
@@ -37,12 +38,12 @@ public class Phone {
 		this.id = id;
 	}
 
-	public int getNumber() {
-		return number;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	public void setNumber(int number) {
-		this.number = number;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	public int getCitycode() {

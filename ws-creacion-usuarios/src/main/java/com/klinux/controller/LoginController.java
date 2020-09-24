@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -23,14 +24,14 @@ public class LoginController {
 
 	@PostMapping("login")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ResponseDto saveUser(@RequestBody UsuarioDto user) {
+	public ResponseEntity<ResponseDto> saveUser(@RequestBody UsuarioDto user) {
 		ResponseDto response = new ResponseDto();
 		try {
 			response = loginService.saveUser(user);
 		} catch (Exception e) {
-			e.printStackTrace();
-			log.error(e.getMessage());
+			log.error(new Throwable().getStackTrace()[0].getMethodName() + " - " + e.getMessage());
+			return new ResponseEntity<>(response, HttpStatus.CONFLICT);
 		}
-		return response;
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }

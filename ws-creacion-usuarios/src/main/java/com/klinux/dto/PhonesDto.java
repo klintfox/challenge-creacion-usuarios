@@ -5,15 +5,15 @@ import java.io.Serializable;
 public class PhonesDto implements Serializable {
 
 	private static final long serialVersionUID = 4093730209867093750L;
-	private int number;
+	private String number;
 	private int citycode;
 	private int countrycode;
 
-	public int getNumber() {
+	public String getNumber() {
 		return number;
 	}
 
-	public void setNumber(int number) {
+	public void setNumber(String number) {
 		this.number = number;
 	}
 

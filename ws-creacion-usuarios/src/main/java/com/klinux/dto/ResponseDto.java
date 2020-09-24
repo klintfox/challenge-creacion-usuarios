@@ -27,7 +27,7 @@ public class ResponseDto implements Serializable {
 	@JsonProperty("token")
 	private String token;
 
-	@JsonProperty("isactive")
+	@JsonProperty("is_active")
 	private String isactive;
 
 	public String getMensaje() {

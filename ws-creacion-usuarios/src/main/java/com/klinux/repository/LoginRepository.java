@@ -8,11 +8,6 @@ import com.klinux.entity.User;
 @Repository
 public interface LoginRepository extends JpaRepository<User, Long>{
 
-//	User findByEmail(String email);
-
-//	@Query("SELECT u FROM user u WHERE u.email = :email")
-//    public User findByEmail(@Param("email") String email);
-    
     public User findByEmail(String email);
 
 }

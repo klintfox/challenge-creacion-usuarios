@@ -8,4 +8,6 @@ import com.klinux.entity.Phone;
 @Repository
 public interface PhoneRepository extends JpaRepository<Phone, Long> {
 
+	Phone findByPhoneNumber(String phoneNumber);
+
 }
