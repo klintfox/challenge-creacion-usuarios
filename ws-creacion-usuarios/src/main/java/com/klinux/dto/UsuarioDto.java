@@ -27,9 +27,8 @@ public class UsuarioDto implements Serializable {
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(email);
 		String response = (matcher.matches() ? "valid" : "invalid");
-		if (response.equals("valid")) {
+		if (response.equals("valid"))
 			flag = true;
-		}
 		return flag;
 	}
 
@@ -40,9 +39,8 @@ public class UsuarioDto implements Serializable {
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(password);
 		String response = (matcher.matches() ? "valid" : "invalid");
-		if (response.equals("valid")) {
+		if (response.equals("valid"))
 			flag = true;
-		}
 		return flag;
 	}
 

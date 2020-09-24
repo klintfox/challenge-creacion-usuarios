@@ -30,6 +30,9 @@ public class ResponseDto implements Serializable {
 	@JsonProperty("isactive")
 	private String isactive;
 
+	public ResponseDto() {
+	}
+
 	public String getMensaje() {
 		return mensaje;
 	}
@@ -85,5 +88,13 @@ public class ResponseDto implements Serializable {
 	public void setIsactive(String isactive) {
 		this.isactive = isactive;
 	}
+
+	@Override
+	public String toString() {
+		return "ResponseDto [mensaje=" + mensaje + ", id=" + id + ", created=" + created + ", modified=" + modified
+				+ ", lastLogin=" + lastLogin + ", token=" + token + ", isactive=" + isactive + "]";
+	}
+	
+	
 
 }

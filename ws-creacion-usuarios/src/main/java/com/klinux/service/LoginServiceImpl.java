@@ -2,8 +2,6 @@ package com.klinux.service;
 
 import java.util.Date;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +9,7 @@ import com.klinux.dto.ResponseDto;
 import com.klinux.dto.UsuarioDto;
 import com.klinux.entity.Phone;
 import com.klinux.entity.User;
+import com.klinux.exception.ResourceBadRequestException;
 import com.klinux.repository.LoginRepository;
 import com.klinux.repository.PhoneRepository;
 import com.klinux.util.GeneralMessages;
@@ -18,7 +17,7 @@ import com.klinux.util.GeneralMessages;
 @Service
 public class LoginServiceImpl implements LoginService {
 
-	private ResponseDto response = new ResponseDto();
+	private ResponseDto response;
 	private UsuarioDto usuarioDto = new UsuarioDto();
 
 	@Autowired
@@ -29,6 +28,7 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public ResponseDto save(UsuarioDto request) throws Exception {
+		response = new ResponseDto();
 		validateEmailPattern(request);
 		return response;
 	}
@@ -38,8 +38,9 @@ public class LoginServiceImpl implements LoginService {
 		flag = usuarioDto.validateEmailPattern(request.getEmail());
 		if (flag) {
 			validatePasswordPattern(request);
-		} else {
-			response.setMensaje(GeneralMessages.ERROR_EMAIL_FORMAT);
+		}
+		else {
+			throw new ResourceBadRequestException(GeneralMessages.ERROR_EMAIL_FORMAT);
 		}
 	}
 
@@ -49,7 +50,7 @@ public class LoginServiceImpl implements LoginService {
 		if (flag) {
 			findUserbyEmail(request);
 		} else {
-			response.setMensaje(GeneralMessages.ERROR_PASSWORD_FORMAT);
+			throw new ResourceBadRequestException(GeneralMessages.ERROR_PASSWORD_FORMAT);
 		}
 	}
 
@@ -58,11 +59,10 @@ public class LoginServiceImpl implements LoginService {
 		if (userDb == null) {
 			saveUser(usuario);
 		} else {
-			response.setMensaje(GeneralMessages.ERROR_USER_EXISTS);
+			throw new ResourceBadRequestException(GeneralMessages.ERROR_USER_EXISTS);
 		}
 	}
 
-	@Transactional
 	public void saveUser(UsuarioDto userDto) throws Exception {
 		String token = usuarioDto.generateToken(userDto.getEmail());
 		User user = new User();
@@ -79,7 +79,6 @@ public class LoginServiceImpl implements LoginService {
 			savePhonesOfUSer(userDto, user);
 	}
 
-	@Transactional
 	public void savePhonesOfUSer(UsuarioDto userDto, User user) throws Exception {
 		for (int i = 0; i < userDto.getPhones().size(); i++) {
 			Phone phone = new Phone();
@@ -95,7 +94,6 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	public void sendResponse(User user) {
-		ResponseDto response = new ResponseDto();
 		response.setId(user.getId());
 		response.setCreated(user.getCreated());
 		response.setModified(user.getModified());
@@ -103,6 +101,14 @@ public class LoginServiceImpl implements LoginService {
 		response.setToken(user.getToken());
 		response.setIsactive(user.getIsactive());
 		response.setMensaje(GeneralMessages.EXITOSO);
+	}
+
+	public ResponseDto getResponse() {
+		return response;
+	}
+
+	public void setResponse(ResponseDto response) {
+		this.response = response;
 	}
 
 }

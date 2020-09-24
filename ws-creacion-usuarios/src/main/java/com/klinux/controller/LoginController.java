@@ -12,25 +12,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.klinux.dto.ResponseDto;
 import com.klinux.dto.UsuarioDto;
+import com.klinux.exception.ResourceBadRequestException;
 import com.klinux.service.LoginService;
 
 @RestController
 public class LoginController {
-
-	private static Logger log = LoggerFactory.getLogger(LoginController.class);
 
 	@Autowired
 	private LoginService loginService;
 
 	@PostMapping("login")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ResponseEntity<ResponseDto> saveNewUser(@RequestBody UsuarioDto user) {
+	public ResponseEntity<ResponseDto> saveNewUser(@RequestBody UsuarioDto user)
+			throws Exception, ResourceBadRequestException {
 		ResponseDto response = new ResponseDto();
 		try {
 			response = loginService.save(user);
-		} catch (Exception e) {
-			log.error(new Throwable().getStackTrace()[0].getMethodName() + " - " + e.getMessage());
-			return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+		} catch (Exception e) {			
+			throw new Exception("" + e.getMessage());
 		}
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}

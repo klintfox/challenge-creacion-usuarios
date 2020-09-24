@@ -52,13 +52,8 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 		return Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(jwtToken).getBody();
 	}
 
-	/**
-	 * Metodo para autenticarnos dentro del flujo de Spring
-	 * 
-	 * @param claims
-	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private void setUpSpringAuthentication(Claims claims) {		
+	private void setUpSpringAuthentication(Claims claims) {
 		List<String> authorities = (List) claims.get("authorities");
 		UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(claims.getSubject(), null,
 				authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));

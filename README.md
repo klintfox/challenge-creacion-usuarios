@@ -80,7 +80,7 @@ Todos los mensajes deben seguir el formato:
     { 
         "name": "Carlos Rodriguez", 
         "email": "Carlos@rodriguez.cl" , 
-        "password": "Prog35ram26", 
+        "password": "Program26", 
         "phones": [ 
             { 
                 "number": "987654321", 
