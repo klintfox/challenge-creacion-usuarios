@@ -1,8 +1,6 @@
 package com.klinux.service;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -20,18 +18,17 @@ import com.klinux.util.GeneralMessages;
 @Service
 public class LoginServiceImpl implements LoginService {
 
+	private ResponseDto response = new ResponseDto();
+	private UsuarioDto usuarioDto = new UsuarioDto();
+
 	@Autowired
 	private LoginRepository loginRepository;
 
 	@Autowired
 	private PhoneRepository phoneRepository;
 
-	private ResponseDto response = new ResponseDto();
-
-	private UsuarioDto usuarioDto = new UsuarioDto();
-
 	@Override
-	public ResponseDto saveUser(UsuarioDto request) throws Exception {
+	public ResponseDto save(UsuarioDto request) throws Exception {
 		validateEmailPattern(request);
 		return response;
 	}
@@ -59,14 +56,14 @@ public class LoginServiceImpl implements LoginService {
 	public void findUserbyEmail(UsuarioDto usuario) throws Exception {
 		User userDb = loginRepository.findByEmail(usuario.getEmail());
 		if (userDb == null) {
-			saveNewUser(usuario);
+			saveUser(usuario);
 		} else {
 			response.setMensaje(GeneralMessages.ERROR_USER_EXISTS);
 		}
 	}
 
 	@Transactional
-	public void saveNewUser(UsuarioDto userDto) throws Exception {
+	public void saveUser(UsuarioDto userDto) throws Exception {
 		String token = usuarioDto.generateToken(userDto.getEmail());
 		User user = new User();
 		user.setName(userDto.getName());
@@ -79,19 +76,17 @@ public class LoginServiceImpl implements LoginService {
 		user.setToken(token);
 		user = loginRepository.save(user);
 		if (user != null && userDto.getPhones().size() > 0)
-			savePhones(userDto, user);
+			savePhonesOfUSer(userDto, user);
 	}
 
 	@Transactional
-	public void savePhones(UsuarioDto userDto, User user) throws Exception {
-		List<Phone> phones = new ArrayList<>();
+	public void savePhonesOfUSer(UsuarioDto userDto, User user) throws Exception {
 		for (int i = 0; i < userDto.getPhones().size(); i++) {
 			Phone phone = new Phone();
 			phone.setPhoneNumber(userDto.getPhones().get(i).getNumber());
 			phone.setCitycode(userDto.getPhones().get(i).getCitycode());
 			phone.setCountrycode(userDto.getPhones().get(i).getCountrycode());
 			phone.setUser(user);
-			phones.add(phone);
 			phone = phoneRepository.save(phone);
 			if (phone == null)
 				response.setMensaje(GeneralMessages.ERROR);

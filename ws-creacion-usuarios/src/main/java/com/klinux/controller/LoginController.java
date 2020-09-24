@@ -24,10 +24,10 @@ public class LoginController {
 
 	@PostMapping("login")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ResponseEntity<ResponseDto> saveUser(@RequestBody UsuarioDto user) {
+	public ResponseEntity<ResponseDto> saveNewUser(@RequestBody UsuarioDto user) {
 		ResponseDto response = new ResponseDto();
 		try {
-			response = loginService.saveUser(user);
+			response = loginService.save(user);
 		} catch (Exception e) {
 			log.error(new Throwable().getStackTrace()[0].getMethodName() + " - " + e.getMessage());
 			return new ResponseEntity<>(response, HttpStatus.CONFLICT);

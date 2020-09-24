@@ -5,6 +5,6 @@ import com.klinux.dto.UsuarioDto;
 
 public interface LoginService {
 
-	ResponseDto saveUser(UsuarioDto user) throws Exception;
+	ResponseDto save(UsuarioDto user) throws Exception;
 
 }
